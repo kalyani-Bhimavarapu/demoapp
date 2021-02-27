@@ -1,0 +1,30 @@
+ $.ajax({
+        url: 'https://enam.gov.in/NamWebSrv/rest/PlatformIntegrationsMstUpdate/getCommodityGridNew',
+           
+           type: 'Post',
+           contentType: 'application/x-www-form-urlencoded',
+           data: {
+               stateId: '276',
+                forDate: '24-02-2021'
+               
+           },
+      success: function(result) {
+        console.log(result.commodityList);
+       
+        $.each(result.commodityList,function (key, value){
+           
+                  eNamCommodity_Data.push({
+                    state: value.stateName,
+                        apmcs: value.apmcName,
+                        commodity: value.commodityVariety,
+                        minimumRate: value.minimumRate,
+                        modalPrice: value.modalPrice,
+                        maximumRate: value.maximumRate,
+                        CommodityArrivals: value.quantityIn,
+                        CommodityTraded: value.quantitySold,
+                        Unit:value.qtyUom,
+                        Date: '24-02-2021',
+                
+
+                  });
+              });
