@@ -133,8 +133,7 @@ function buildTableBody(data, columns, showHeaders, headers) {
         var dataRow = [];
 
         columns.forEach(function(column) {
-            dataRow.push({text: Object.byString(row, column),headers:
-              '#CCCCCC'});
+            dataRow.push({text: Object.byString(row, column),alignment: 'center',});
         
         })
         body.push(dataRow);
@@ -243,7 +242,7 @@ var dd = {
            {fillColor: function (rowIndex, node, columnIndex) {
     					return (rowIndex  === 0) ? '#CCCCCC' : null;
 				   }}
-				   ),
+		),
            
 
         {
