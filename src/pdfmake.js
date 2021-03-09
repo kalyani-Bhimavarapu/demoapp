@@ -129,6 +129,11 @@ function buildTableBody(data, columns, showHeaders, headers) {
     }
     
     
+    
+     var asd = externalData.sort((a, b) => Number(a.boxNumber) - Number(b.boxNumber));
+    //console.log(asd)
+
+    
   data.forEach(function(row) {
       var dataRow = [];
       //console.log(row.boxNumber);
