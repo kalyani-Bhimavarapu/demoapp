@@ -1,4 +1,4 @@
-var externalDataRetrievedFromServer = [
+var externalData = [
     {
         "gameName": "$50 or $100  (blue)",
         "gameNumber": 749,
@@ -130,23 +130,27 @@ function buildTableBody(data, columns, showHeaders, headers) {
     
     
     data.forEach(function(row) {
-        var dataRow = [];
+      var dataRow = [];
+      //console.log(row.boxNumber);
+      if(row.boxNumber !== undefined)
+      {
+      columns.forEach(function(column) {
+          dataRow.push({text: Object.byString(row, column)});
+      
+      })
+   
+    //console.log(dataRow)
+      body.push(dataRow);
+    }
+  });
 
-        columns.forEach(function(column) {
-            dataRow.push({text: Object.byString(row, column),headers:
-              '#CCCCCC'});
-        
-        })
-        body.push(dataRow);
-       
-    });
-
-    return body;
+  return body;
 }
 
 
 function table(data, columns, witdhsDef, showHeaders, headers, layoutDef) {
     return {
+        alignment:'center',
         table: {
             headerRows: 1,
             widths: witdhsDef,
@@ -159,17 +163,17 @@ function table(data, columns, witdhsDef, showHeaders, headers, layoutDef) {
 
 var dd = {
     content: [
-        { text: 'Table', fontSize: 12, bold:true, margin: [0, 0 ,0, 10]},
+        { text: 'Table', fontSize: 16, bold:true, margin: [0, 0 ,0, 10]},
         table(
 
-            externalDataRetrievedFromServer,
+            externalData,
             
             ['boxNumber','packetNumber','gameName','startValue','stopValue','soldCount','soldValue'],
-            // Custom columns widths
-            ['*', '20%', '35%','*','*','*','*'],
-            // Show headers?
+          
+            ['*', '20%', '40%','*','*','*','*'],
+            
             true,
-            // Custom headers
+           
             [
             'Box',
             'Pack Number',
@@ -180,8 +184,10 @@ var dd = {
             'Total',
             ],
            
-           
-            // Custom layout, use '' for no layout
-            '')
+               {fillColor: function (rowIndex, node, columnIndex) {
+    					return (rowIndex  === 0) ? '#CCCCCC' : null;
+				   }}
+				   
+		)
     ]
 }
