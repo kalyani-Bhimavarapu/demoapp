@@ -1,4 +1,4 @@
-var externalDataRetrievedFromServer = [
+var externalData = [
     {
         "gameName": "$50 or $100  (blue)",
         "gameNumber": 749,
@@ -129,23 +129,28 @@ function buildTableBody(data, columns, showHeaders, headers) {
     }
     
     
-    data.forEach(function(row) {
-        var dataRow = [];
+  data.forEach(function(row) {
+      var dataRow = [];
+      //console.log(row.boxNumber);
+      if(row.boxNumber !== undefined)
+      {
+      columns.forEach(function(column) {
+          dataRow.push({text: Object.byString(row, column)});
+      
+      })
+   
+//console.log(dataRow)
+      body.push(dataRow);
+    }
+  });
 
-        columns.forEach(function(column) {
-            dataRow.push({text: Object.byString(row, column),alignment: 'center',});
-        
-        })
-        body.push(dataRow);
-       
-    });
-
-    return body;
+  return body;
 }
 
 
 function table(data, columns, witdhsDef, showHeaders, headers, layoutDef) {
     return {
+        alignment:'center',
         table: {
             headerRows: 1,
             widths: witdhsDef,
@@ -221,7 +226,7 @@ var dd = {
 
         table(
 
-            externalDataRetrievedFromServer,
+            externalData,
             
             ['boxNumber','packetNumber','gameName','startValue','stopValue','soldCount','soldValue'],
             
@@ -237,6 +242,7 @@ var dd = {
             'Close',
             'Price',
             'Total',
+            
             ],
            
            {fillColor: function (rowIndex, node, columnIndex) {
