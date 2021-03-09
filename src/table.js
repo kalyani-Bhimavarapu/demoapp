@@ -128,6 +128,9 @@ function buildTableBody(data, columns, showHeaders, headers) {
     body.push(headers);
     }
     
+     var asd = externalData.sort((a, b) => Number(a.boxNumber) - Number(b.boxNumber));
+//console.log(asd)
+
     
     data.forEach(function(row) {
       var dataRow = [];
@@ -146,6 +149,7 @@ function buildTableBody(data, columns, showHeaders, headers) {
 
   return body;
 }
+
 
 
 function table(data, columns, witdhsDef, showHeaders, headers, layoutDef) {
