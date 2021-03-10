@@ -156,6 +156,7 @@ function buildTableBody(data, columns, showHeaders, headers) {
 function table(data, columns, witdhsDef, showHeaders, headers, layoutDef) {
     return {
         alignment:'center',
+        	margin:[0,0,0,25],
         table: {
             headerRows: 1,
             widths: witdhsDef,
@@ -177,7 +178,7 @@ var dd = {
 	            
 	           
 	                {
-	                    text: 'Report', 
+	                    text: 'Shift Report', 
 	                    style: 'ReportTitle',
 	                    width: '*'
 	                },
@@ -215,14 +216,19 @@ var dd = {
 	                text: 'User Id: 86UGU6DLUS2RQYAVRAXB',
 	                style: 'ReportBillingAddressTitle'
 	            },
+	             {
+	                text: '\n \nPhone Number: +19876543210' ,
+	                style: 'ReportBillingAddress'
+	            },
 	           ]
 	    },
 	    
 	    {
 	        columns: [
+	            {},
 	            {
-	                text: 'Phone Number: +19876543210 \n email: Testuser@test.com',
-	                style: 'ReportBillingAddress'
+	               text: ' \n email: Testuser@test.com',
+	               style: 'ReportBillingAddress'
 	            },
 	            ]
 	    },
@@ -257,6 +263,8 @@ var dd = {
            
 
         {
+            
+            	style: 'tableExample',
           table: {
             headerRows: 0,
            
@@ -326,55 +334,52 @@ var dd = {
 			margin:[0,0,0,15]
 		},
 	
-		ReportSubTitle: {
-			fontSize: 12,
-			alignment:'right'
-		},
-		ReportSubValue: {
-			fontSize: 12,
-			alignment:'right'
-		},
-		
+	
 		ReportBillingTitle: {
-			fontSize: 14,
+			fontSize: 18,
 			bold: true,
 			alignment:'left',
-			margin:[0,20,0,5],
+			margin:[0,20,0,0],
 		},
 	
 		ReportBillingDetails: {
+			margin:[2,0,0,10],
 			alignment:'left'
 
 		},
 		ReportBillingAddressTitle: {
-		    margin: [0,7,0,3],
+		    margin: [0,7,0,10],
 		    bold: true
 		},
 		ReportBillingAddress: {
-		    
+		   margin:[-35,0,0,-8], 
+		   alignment:'left'
 		},
 		
-		itemsFooterSubTitle: {
+			itemsFooterSubTitle: {
 		    margin: [0,5,0,5],
 		    bold: true,
-		    alignment:'right',
+		    alignment:'left',
 		},
 		itemsFooterSubValue: {
 		    margin: [0,5,0,5],
 		    bold: true,
-		    alignment:'right',
+		    alignment:'center',
 		},
 		itemsFooterTotalTitle: {
 		    margin: [0,5,0,5],
 		    bold: true,
-		    alignment:'right',
+		    alignment:'left',
 		},
 		itemsFooterTotalValue: {
 		    margin: [0,5,0,5],
 		     bold: true,
-		     alignment:'right',
+		     alignment:'center',
 		},
 
+			tableExample: {
+			margin: [270, 5,10, 0]
+		},
 		
 	},
 	defaultStyle: {
