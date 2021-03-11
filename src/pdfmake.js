@@ -105,66 +105,98 @@ var externalData = [
 
 ];
 
-Object.byString = function(o, s) {
-    s = s.replace(/\[(\w+)\]/g, '.$1'); 
-    s = s.replace(/^\./, '');           
-    var a = s.split('.');
-    for (var i = 0, n = a.length; i < n; ++i) {
-        var k = a[i];
-        if (k in o) {
-            o = o[k];
-        } else {
-            return;
-        }
+const dataWithBoxes = externalData.filter(function (item) {
+    return item.boxNumber != null;
+})
+
+const dataTablePre = dataWithBoxes.reduce((acc, item) => {
+    if (acc[item.boxNumber] == null) {
+        acc[item.boxNumber] = [item]
+    } else {
+        acc[item.boxNumber].push(item)
     }
-    return o;
-}
+    return acc;
+
+}, {})
 
 
-function buildTableBody(data, columns, showHeaders, headers) {
-    var body = [];
-
-    if(showHeaders) {
-    body.push(headers);
-    }
-    
-    
-    
-     var asd = externalData.sort((a, b) => Number(a.boxNumber) - Number(b.boxNumber));
-    //console.log(asd)
-
-    
-  data.forEach(function(row) {
-      var dataRow = [];
-      //console.log(row.boxNumber);
-      if(row.boxNumber !== undefined)
-      {
-      columns.forEach(function(column) {
-          dataRow.push({text: Object.byString(row, column)});
-      
-      })
-   
-//console.log(dataRow)
-      body.push(dataRow);
-    }
-  });
-
-  return body;
-}
+console.log("daata table is", Object.keys(dataTablePre));
 
 
-function table(data, columns, witdhsDef, showHeaders, headers, layoutDef) {
+const dataTableKeys = Object.keys(dataTablePre);
+
+const rowDataForTableData = dataTableKeys.map(function (item) {
+
     return {
-        alignment:'center',
-        	margin:[0,0,0,25],
-        table: {
-            headerRows: 1,
-            widths: witdhsDef,
-            body: buildTableBody(data, columns, showHeaders, headers)
-        },
-        layout: layoutDef
-    };
+        rowSpan: dataTablePre[item].length,
+        data: [...dataTablePre[item]],
+        boxNumber: item
+    }
+
+});
+
+
+
+const pdfMakeRow = rowDataForTableData.reduce(function (acc, item) {
+
+  
+
+    const rowDataa = item.data.map(function (rowItem) {
+
+
+        return ['boxNumber','packetNumber','gameName','startValue','stopValue','soldCount','soldValue'].map(function (rowItemText) {
+
+                      if(item.rowSpan === 1)      {
+            if (rowItemText === 'boxNumber') {
+                return {
+                    rowSpan: item.rowSpan,
+                    text: rowItem[rowItemText].toString(),
+                    }
+            } else {
+                return {
+                    text: rowItem[rowItemText].toString(),
+                    fillColor: rowItem.updatedVia === "ACTIVATION"  ? '#ffadb7' : '#fff',
+                };
+            }
+        }else{
+            if (rowItemText == 'boxNumber') {
+                return {
+                    rowSpan: item.rowSpan,
+                    text: rowItem[rowItemText].toString(),
+                      }
+            } else {
+                return {
+                    text: rowItem[rowItemText].toString(),
+                    fillColor: rowItem.updatedVia === "ACTIVATION"  ? '#ffadb7' : '#8ae393',
+                };
+            }  
+        }
+        })
+    })
+
+    acc.push(rowDataa)
+    return acc;
+
 }
+    , []);
+
+
+var flattened = pdfMakeRow.flat(1);
+
+const header = [
+    {  text: 'Box'},
+    { text: 'Pack Number'},
+    { text: 'Name'},
+    { text: 'Open'},
+    { text: 'Close'},
+    { text: 'Price'},
+    { text: 'Total'},
+]
+
+const finalData = [header].concat(flattened) ;
+
+
+
 
 
 var dd = {
@@ -235,36 +267,33 @@ var dd = {
       
 	    '\n\n',
 
-        table(
 
-            externalData,
-            
-            ['boxNumber','packetNumber','gameName','startValue','stopValue','soldCount','soldValue'],
-            
-            ['*', '20%', '35%','*','*','*','*'],
-            
-            true,
+
+		{
+			style: 'tableExample1',
+			table: {
+			
+			headerRows: 0,
            
-            [
-            'Box',
-            'Pack Number',
-            'Name',
-            'Open',
-            'Close',
-            'Price',
-            'Total',
-            
-            ],
-           
-           {fillColor: function (rowIndex, node, columnIndex) {
-    					return (rowIndex  === 0) ? '#CCCCCC' : null;
-				   }}
-		),
-           
+            widths:  ['*', '20%', '35%','*','*','*','*'],
+			
+			body: finalData
+			
+			},
+			
+			
+			layout: {
+				fillColor: function (rowIndex, node, columnIndex) {
+					return (rowIndex  === 0) ? '#CCCCCC' : null;
+				}
+			}
+			
+		    
+		},
 
         {
-            
-            	style: 'tableExample',
+        
+    	style: 'tableExample',
           table: {
             headerRows: 0,
            
@@ -378,8 +407,13 @@ var dd = {
 		},
 
 			tableExample: {
-			margin: [270, 5,10, 0]
+			margin: [280, 25,0, 0]
 		},
+		
+			tableExample1: {
+			//margin: [280, 25,0, 0]
+		},
+		
 		
 	},
 	defaultStyle: {
