@@ -151,6 +151,7 @@ const pdfMakeRow = rowDataForTableData.reduce(function (acc, item) {
                 return {
                     rowSpan: item.rowSpan,
                     text: rowItem[rowItemText].toString(),
+                    alignment:'center',
                     }
             } else {
                 return {
@@ -163,6 +164,7 @@ const pdfMakeRow = rowDataForTableData.reduce(function (acc, item) {
                 return {
                     rowSpan: item.rowSpan,
                     text: rowItem[rowItemText].toString(),
+                    alignment:'center',
                       }
             } else {
                 return {
@@ -215,7 +217,6 @@ var dd = {
 	                    width: '*'
 	                },
     	            
-    	            
 	            ],
 	        
 	    },
@@ -249,7 +250,7 @@ var dd = {
 	                style: 'ReportBillingAddressTitle'
 	            },
 	             {
-	                text: '\n \nPhone Number: +19876543210' ,
+	                text: '\n \nMobile: +19876543210' ,
 	                style: 'ReportBillingAddress'
 	            },
 	           ]
@@ -275,7 +276,7 @@ var dd = {
 			
 			headerRows: 0,
            
-            widths:  ['*', '20%', '35%','*','*','*','*'],
+            widths:  ['*', '18%', '40%','*','*','*','*'],
 			
 			body: finalData
 			
@@ -285,7 +286,9 @@ var dd = {
 			layout: {
 				fillColor: function (rowIndex, node, columnIndex) {
 					return (rowIndex  === 0) ? '#CCCCCC' : null;
-				}
+				},
+				
+       
 			}
 			
 		    
@@ -305,11 +308,14 @@ var dd = {
               [ 
                   {
                       text:'Total Sale Amount',
-                      style:'itemsFooterSubTitle'
+                      style:'itemsFooterSubTitle',
+                      
+                      
                   }, 
                   { 
                       text:'$1240.00',
-                      style:'itemsFooterSubValue'
+                      style:'itemsFooterSubValue',
+                      
                   }
               ],
               [ 
@@ -320,8 +326,9 @@ var dd = {
                   },
                   {
                       text: '$421.00',
-                      	border: [false, false, false, true],
-                      style:'itemsFooterSubValue'
+                      border: [false, false, false, true],
+                      style:'itemsFooterSubValue',
+                      color:'#de6868'
                   }
               ],
               [ 
@@ -343,7 +350,8 @@ var dd = {
                   {
                       text: '$93.00',
                       border: [false, false, false, true],
-                      style:'itemsFooterTotalValue'
+                      style:'itemsFooterTotalValue',
+                      color:'#de6868'
                   }
               ],
             ]
@@ -360,7 +368,7 @@ var dd = {
 			fontSize: 22,
 			bold: true,
 			alignment:'right',
-			margin:[0,0,0,15]
+			margin:[0,0,0,5]
 		},
 	
 	
@@ -368,7 +376,7 @@ var dd = {
 			fontSize: 18,
 			bold: true,
 			alignment:'left',
-			margin:[0,20,0,0],
+			margin:[0,5,0,0],
 		},
 	
 		ReportBillingDetails: {
@@ -381,7 +389,7 @@ var dd = {
 		    bold: true
 		},
 		ReportBillingAddress: {
-		   margin:[-35,0,0,-8], 
+		   margin:[-40,0,0,-8], 
 		   alignment:'left'
 		},
 		
@@ -411,12 +419,17 @@ var dd = {
 		},
 		
 			tableExample1: {
-			//margin: [280, 25,0, 0]
+			alignment:'center',
+			fontSize: 12,
+			margin: [0,25,0,25],
 		},
 		
 		
 	},
 	defaultStyle: {
 		columnGap: 10,
-	}
+	},
+	pageSize: 'A4',
+    pageOrientation: 'portrait',
+      
 }
