@@ -156,7 +156,7 @@ const pdfMakeRow = rowDataForTableData.reduce(function (acc, item) {
             } else {
                 return {
                     text: rowItem[rowItemText].toString(),
-                    fillColor: rowItem.updatedVia === "ACTIVATION"  ? '#ffadb7' : '#fff',
+                    fillColor: (rowItem.packSize && rowItem.stopValue === 30  )  ? '#ffadb7' : '#fff',
                 };
             }
         }else{
@@ -169,7 +169,7 @@ const pdfMakeRow = rowDataForTableData.reduce(function (acc, item) {
             } else {
                 return {
                     text: rowItem[rowItemText].toString(),
-                    fillColor: rowItem.updatedVia === "ACTIVATION"  ? '#ffadb7' : '#8ae393',
+                    fillColor: (rowItem.packSize && rowItem.stopValue === 30  ) ? '#ffadb7' : '#8ae393',
                 };
             }  
         }
