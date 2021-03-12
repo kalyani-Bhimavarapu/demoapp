@@ -162,9 +162,10 @@ const pdfMakeRow = rowDataForTableData.reduce(function (acc, item) {
         }else{
             if (rowItemText == 'boxNumber') {
                 return {
+                   
                     rowSpan: item.rowSpan,
                     text: rowItem[rowItemText].toString(),
-                    alignment:'center',
+                    margin:[0,(item.rowSpan*5.5),0,0],
                       }
             } else {
                 return {
@@ -285,7 +286,7 @@ var dd = {
 			
 			layout: {
 				fillColor: function (rowIndex, node, columnIndex) {
-					return (rowIndex  === 0) ? '#CCCCCC' : null;
+					return (rowIndex  === 0) ? '#CCC' : null;
 				},
 				
        
@@ -421,7 +422,7 @@ var dd = {
 			tableExample1: {
 			alignment:'center',
 			fontSize: 12,
-			margin: [0,25,0,25],
+			margin: [0,15,0,25],
 		},
 		
 		
